@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8)	 # Проверка версии CMake.
 
 project(RID_coin)			# Название проекта
 
+AUX_SOURCE_DIRECTORY("Src/utils" SRC_DIRS)
 AUX_SOURCE_DIRECTORY("Src" SRC_DIRS)
 
 set(HEADER_FILES "Inc")			# Тоже самое, но для библиотеки
