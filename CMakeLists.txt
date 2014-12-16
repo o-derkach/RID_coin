@@ -2,14 +2,12 @@ cmake_minimum_required(VERSION 2.8)	 # Проверка версии CMake.
 
 project(RID_coin)			# Название проекта
 
-set(SOURCE_FILES Src/*.cpp)		# Установка переменной со списком исходников для исполняемого файла
+AUX_SOURCE_DIRECTORY("Src" SRC_DIRS)
 
-set(HEADER_FILES Inc/*.h)			# Тоже самое, но для библиотеки
+set(HEADER_FILES "Inc")			# Тоже самое, но для библиотеки
 
-include_directories(HEADER_FILES)
+include_directories(${HEADER_FILES})
 
-#add_library(foo STATIC ${SOURCE_LIB})	# Создание статической библиотеки с именем foo
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -std=c++0x")
 
-add_executable(main ${SOURCE_FILES})	# Создает исполняемый файл с именем main
-
-#target_link_libraries(main foo)		# Линковка программы с библиотекой
+add_executable(main ${SRC_DIRS})	# Создает исполняемый файл с именем main
