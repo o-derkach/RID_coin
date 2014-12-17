@@ -6,7 +6,7 @@
 
 class Node {
 	public:
-		Node();
+		Node(byte *secret);
 		Node(Node *right, Node *left);
 		virtual ~Node();
 		void setFather(Node *father);
@@ -19,11 +19,13 @@ class Node {
 
 class PayTree {
 	public:
-		PayTree();
+		PayTree(int tree_size);
 		virtual ~PayTree();
 	private:
 		Node root;
-		byte St[SIGN_SIZE];
+		byte *St;
+		int size;
+		Node *nodes;
 };
 
 #endif /* PAYTREE_H_ */

@@ -7,6 +7,7 @@
 //Includes:
 #include <iostream>
 #include <stdint.h>
+#include <string.h>
 
 //Types:
 #define byte unsigned char
