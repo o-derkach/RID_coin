@@ -1,5 +1,11 @@
 #include "PayTree.h"
 
+Node::Node()
+	: father(NULL), rgt_son(NULL), lft_son(NULL)
+{
+	// TODO Auto-generated destructor stub
+}
+
 Node::~Node()
 {
 	// TODO Auto-generated destructor stub

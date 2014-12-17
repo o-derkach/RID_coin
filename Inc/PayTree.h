@@ -6,6 +6,7 @@
 
 class Node {
 	public:
+		Node();
 		Node(Node *right, Node *left);
 		virtual ~Node();
 		void setFather(Node *father);
