@@ -7,7 +7,6 @@ class Broker {
 		virtual ~Broker();
 
 	private:
-		Rsa
 };
 
 #endif /* BROKER_H_ */

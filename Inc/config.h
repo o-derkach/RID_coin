@@ -13,4 +13,6 @@
 #define PAYTREE_SIZE 2 << (PAYTREE_HEIGHT + 1)
 #define LEAF_SIZE 2 << PAYTREE_HEIGHT
 
+#define RSA_SIZE 1024
+
 #endif /* CONFIG_H_ */
