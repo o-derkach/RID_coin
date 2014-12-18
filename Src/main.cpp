@@ -21,7 +21,7 @@ int main()
 	delete[] to;
 	delete[] from1;
 
-	Leafes l;
+	Leafes l = Leafes();
 
 	byte t1[SHA1_SIZE];
 	byte t2[SHA1_SIZE];
