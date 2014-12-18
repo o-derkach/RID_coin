@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "RSAclass.h"
 #include "PayTree.h"
+#include "miner.h"
 
 int main()
 {
@@ -8,7 +9,7 @@ int main()
 
 	RSAclass rsac;
 
-	byte *from = new byte[10];
+	/*byte *from = new byte[10];
 	byte *to = new byte[rsac.size()];
 	byte *from1 = new byte[rsac.size()];
 
@@ -20,36 +21,45 @@ int main()
 	delete[] from;
 	delete[] to;
 	delete[] from1;
-
+*/
 	Leafes l = Leafes();
 
-	byte t1[SHA1_SIZE];
-	byte t2[SHA1_SIZE];
-	byte t3[SHA1_SIZE];
-	byte t4[SHA1_SIZE];
-	byte t5[SHA1_SIZE];
-	byte t6[SHA1_SIZE];
-	byte t7[SHA1_SIZE];
-	byte t8[SHA1_SIZE];
+    srand (time(NULL));
 
-	RAND_bytes(t1, SHA1_SIZE);
-	RAND_bytes(t2, SHA1_SIZE);
-	RAND_bytes(t3, SHA1_SIZE);
-	RAND_bytes(t4, SHA1_SIZE);
-	RAND_bytes(t5, SHA1_SIZE);
-	RAND_bytes(t6, SHA1_SIZE);
-	RAND_bytes(t7, SHA1_SIZE);
-	RAND_bytes(t8, SHA1_SIZE);
+    char key[] = "Public Key";
+    Hash h_key;
+    calculate_hash(key, h_key);
+    string s_key = hash_to_str(h_key);
 
-	l.push_back(t1);
-	l.push_back(t2);
-	l.push_back(t3);
-	l.push_back(t4);
-	l.push_back(t5);
-	l.push_back(t6);
-	l.push_back(t7);
-	l.push_back(t8);
+    Miner m(s_key);
 
-	PayTree pt(l);
+    m.Start_mining(l);
+
+    PayTree pt(l);
+
+    byte *tbs = pt.getTBS();
+    byte *to = new byte[rsac.size()];
+    uint32_t sign_size;
+    int res = rsac.sign(tbs, SHA1_SIZE + 1, to, &sign_size);
+    if (res == 0)
+    {
+    	std::cout << "FAIL!!\n";
+    	return -1;
+    }
+    std::cout << sign_size << "\n";
+    delete[] tbs;
+
+    pt.setSign(to, sign_size);
+    delete[] to;
+
+    UsedLeafes ul;
+    ul.next_leaf = 0;
+    ul.start = NULL;
+    PayPath p = pt.getPath(ul, l);
+    if (verifyPath(p, rsac))
+    {
+    	std::cout << "FAIL!!\n";
+    }
+
 	return 0;
 }
