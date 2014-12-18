@@ -1,15 +1,5 @@
 #include "PayTree.h"
 
-Node::Node()
-	: father(NULL), rgt_son(NULL), lft_son(NULL)
-{
-}
-
-Node::~Node()
-{
-	// TODO Auto-generated destructor stub
-}
-
 void Node::setSecret(byte *secret)
 {
 	sha1::calc(secret, SHA1_SIZE, this->hash);
@@ -133,7 +123,7 @@ bool verifyPath(PayPath &p, RSAclass &r)
 	byte check[SHA1_SIZE];
 	byte concat[2 * SHA1_SIZE];
 	sha1::calc(p.pub, SHA1_SIZE, check);
-	if (memcmp(check, p.start->hash) != 0)
+	if (memcmp(check, p.start->hash, SHA1_SIZE) != 0)
 	{
 		delete[] p.tbs;
 		return false;
@@ -143,7 +133,7 @@ bool verifyPath(PayPath &p, RSAclass &r)
 		memcpy(concat, f->rgt_son->hash, SHA1_SIZE);
 		memcpy(concat + SHA1_SIZE, f->lft_son->hash, SHA1_SIZE);
 		sha1::calc(concat, 2 * SHA1_SIZE, check);
-		if(memcmp(check, f->hash) != 0)
+		if(memcmp(check, f->hash, SHA1_SIZE) != 0)
 		{
 			delete[] p.tbs;
 			return false;

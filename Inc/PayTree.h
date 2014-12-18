@@ -7,21 +7,16 @@
 #include <vector>
 #include "RSAclass.h"
 
-class Node {
-	public:
-		Node();
-		//Node(byte *secret);
-		//Node(Node *right, Node *left);
-		virtual ~Node();
-		void setFather(Node *father);
-		void setRL(Node *right, Node *left);
-		void setSecret(byte *secret);
-		byte * getPublic();
-	private:
+struct Node {
 		Node *father;
 		Node *rgt_son;
 		Node *lft_son;
 		byte hash[SHA1_SIZE];
+
+		void setFather(Node *father);
+		void setRL(Node *right, Node *left);
+		void setSecret(byte *secret);
+		byte * getPublic();
 };
 
 typedef std::vector<byte *> Leafes;
