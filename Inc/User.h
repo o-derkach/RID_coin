@@ -11,6 +11,5 @@ class User {
 };
 
 typedef std::list<User> Users;
-typedef std::list<byte [SHA1_SIZE]> Leaves;
 
 #endif /* USER_H_ */

@@ -3,13 +3,19 @@
 
 #include "utils.h"
 #include "config.h"
+#include "sha1.h"
+#include "user.h"
+#include <list.h>
 
 class Node {
 	public:
+		Node();
 		Node(byte *secret);
 		Node(Node *right, Node *left);
 		virtual ~Node();
 		void setFather(Node *father);
+		void setRL(Node *right, Node *left);
+		void setSecret(byte *secret);
 	private:
 		Node *father;
 		Node *rgt_son;
@@ -17,14 +23,17 @@ class Node {
 		byte hash[SHA1_SIZE];
 };
 
+typedef std::list<byte [SHA1_SIZE]> Leafes;
+
 class PayTree {
 	public:
-		PayTree(int tree_size);
+		PayTree(Leafes l);
 		virtual ~PayTree();
 	private:
 		Node root;
 		byte *St;
 		int size;
+		int height;
 		Node *nodes;
 };
 
