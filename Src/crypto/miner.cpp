@@ -99,7 +99,9 @@ void Miner::Start_mining(Leafes &l) {
 		} while (!preaty_hash(h_block, 16));
 
 		cout << i << ":\t" << hash_to_str(h_block) << endl;
-		l.push_back(h_block.x);
+		byte *nh = new byte[SHA1_SIZE];
+		memcpy(nh, h_block.x, SHA1_SIZE);
+		l.push_back(nh);
 		block.magic = str_to_hash(s_magic);
 
 		Block new_block;
