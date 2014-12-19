@@ -43,7 +43,6 @@ int main()
     	std::cout << "FAIL!!\n";
     	return -1;
     }
-    std::cout << sign_size << "\n";
 
     pt.setSign(to, sign_size);
     delete[] to;
@@ -51,10 +50,27 @@ int main()
     UsedLeafes ul;
     ul.next_leaf = 0;
     ul.start = NULL;
-    PayPath p = pt.getPath(ul, l);
-    if (verifyPath(p, rsac))
+	PayPath p = pt.getPath(ul, l);
+    if (!verifyPath(p, rsac))
     {
     	std::cout << "FAIL!!\n";
+    }
+
+	PayPath p1 = pt.getPath(ul, l);
+	if (!verifyPath(p1, rsac))
+	{
+		std::cout << "FAIL!!\n";
+	}
+
+	PayPath p2 = pt.getPath(ul, l);
+	if (!verifyPath(p2, rsac))
+	{
+		std::cout << "FAIL!!\n";
+	}
+
+    for (int i = 0; i < l.size(); ++i)
+    {
+    	delete[] l[i];
     }
 
 	return 0;

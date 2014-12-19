@@ -19,7 +19,7 @@
 //Constants:
 
 //Functions:
-//#define INFO(str) std::cout << str << std::endl
+#define INFO(str) std::cout << str << std::endl
 
-#define  INFO(str)
+//#define  INFO(str)
 #endif
