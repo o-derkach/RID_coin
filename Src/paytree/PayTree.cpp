@@ -9,22 +9,12 @@ void Node::setRL(Node *right, Node *left)
 {
 	rgt_son = right;
 	lft_son = left;
-	right->setFather(this);
-	left->setFather(this);
+	right->father = this;
+	left->father = this;
 	byte concat[2 * SHA1_SIZE];
 	memcpy(concat, right->hash, SHA1_SIZE);
 	memcpy(concat + SHA1_SIZE, left->hash, SHA1_SIZE);
 	sha1::calc(concat, 2 * SHA1_SIZE, this->hash);
-}
-
-void Node::setFather(Node *father)
-{
-	this->father = father;
-}
-
-byte * Node::getPublic()
-{
-	return this->hash;
 }
 
 PayTree::PayTree(Leafes l)
@@ -78,9 +68,6 @@ PayTree::~PayTree()
 
 byte *PayTree::getTBS()
 {
-	byte *tbs = new byte[SHA1_SIZE + 1];
-	memcpy(tbs, root->getPublic(), SHA1_SIZE);
-	tbs[SHA1_SIZE] = (byte)(height & 0xFF);
 	return tbs;
 }
 
@@ -112,7 +99,7 @@ PayPath PayTree::getPath(UsedLeafes &ul, Leafes &l)
 		}
 		p.end = p_n;
 	}
-	p.tbs = this->getTBS();
+	p.tbs = tbs;
 	return p;
 }
 
@@ -125,7 +112,6 @@ bool verifyPath(PayPath &p, RSAclass &r)
 	sha1::calc(p.pub, SHA1_SIZE, check);
 	if (memcmp(check, p.start->hash, SHA1_SIZE) != 0)
 	{
-		delete[] p.tbs;
 		return false;
 	}
 	while (s != p.end)
@@ -135,13 +121,10 @@ bool verifyPath(PayPath &p, RSAclass &r)
 		sha1::calc(concat, 2 * SHA1_SIZE, check);
 		if(memcmp(check, f->hash, SHA1_SIZE) != 0)
 		{
-			delete[] p.tbs;
 			return false;
 		}
 		s = f;
 		f = s->father;
 	}
-	int v = r.verify(p.tbs, SHA1_SIZE + 1, p.St, 128);
-	delete[] p.tbs;
-	return v;
+	return (bool)r.verify(p.tbs, SHA1_SIZE + 1, p.St, SIGN_SIZE);
 }

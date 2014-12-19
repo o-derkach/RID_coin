@@ -66,8 +66,9 @@ bool preaty_hash(const Hash& hash, unsigned int number)
 string random_string()
 {
     Hash l;
-    for(int i = 0; i < Hash_byte_number; ++i)
-        l.x[i] = rand();
+    /*for(int i = 0; i < Hash_byte_number; ++i)
+        l.x[i] = rand();*/
+    RAND_bytes(l.x, Hash_byte_number);
     return hash_to_str(l);
 }
 
