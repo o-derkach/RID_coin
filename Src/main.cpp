@@ -24,8 +24,6 @@ int main()
 */
 	Leafes l = Leafes();
 
-    srand (time(NULL));
-
     char key[] = "Public Key";
     Hash h_key;
     calculate_hash(key, h_key);
@@ -37,17 +35,15 @@ int main()
 
     PayTree pt(l);
 
-    byte *tbs = pt.getTBS();
     byte *to = new byte[rsac.size()];
     uint32_t sign_size;
-    int res = rsac.sign(tbs, SHA1_SIZE + 1, to, &sign_size);
+    int res = rsac.sign(pt.getTBS(), SHA1_SIZE + 1, to, &sign_size);
     if (res == 0)
     {
     	std::cout << "FAIL!!\n";
     	return -1;
     }
     std::cout << sign_size << "\n";
-    delete[] tbs;
 
     pt.setSign(to, sign_size);
     delete[] to;

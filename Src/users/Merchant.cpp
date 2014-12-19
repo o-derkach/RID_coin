@@ -1,12 +1,12 @@
-#include "Broker.h"
+#include "Merchant.h"
 
-Broker::Broker()
+Merchant::Merchant()
 {
 	// TODO Auto-generated constructor stub
 
 }
 
-Broker::~Broker()
+Merchant::~Merchant()
 {
 	// TODO Auto-generated destructor stub
 }

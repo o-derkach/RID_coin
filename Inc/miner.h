@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const size_t Hash_byte_number = 20;
+const size_t Hash_byte_number = SHA1_SIZE;
 const size_t Hash_char_number = 2*Hash_byte_number;
 const size_t Hash_bit_number = 8*Hash_byte_number;
 

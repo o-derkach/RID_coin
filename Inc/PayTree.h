@@ -13,10 +13,8 @@ struct Node {
 		Node *lft_son;
 		byte hash[SHA1_SIZE];
 
-		void setFather(Node *father);
 		void setRL(Node *right, Node *left);
 		void setSecret(byte *secret);
-		byte * getPublic();
 };
 
 typedef std::vector<byte *> Leafes;
@@ -43,7 +41,8 @@ class PayTree {
 		PayPath getPath(UsedLeafes &ul, Leafes &l);
 	private:
 		Node *root;
-		byte St[128];
+		byte St[SIGN_SIZE];
+		byte tbs[SHA1_SIZE];
 		int size;
 		int height;
 		Node *nodes;
