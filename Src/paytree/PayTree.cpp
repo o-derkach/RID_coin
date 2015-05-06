@@ -88,9 +88,10 @@ PayPath PayTree::getPath(UsedLeafes &ul, Leafes &l)
 		p_n = p.start;
 		while (ul_n->father != p_n->father)
 		{
-			ul_n = ul_n->father;
-			p_n = p_n->father;
+				ul_n = ul_n->father;
+				p_n = p_n->father;
 		}
+		p_n = p_n->father;
 		p.end = p_n;
 	}
 	p.tbs = tbs;
